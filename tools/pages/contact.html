@@ -1,0 +1,114 @@
+<header class="page-head">
+  <div class="wrap">
+    {{crumbs}}
+    <h1 class="h1">تواصل معنا</h1>
+    <p class="lead">أسرع طريقة هي الاتصال أو واتساب. ويمكنك أيضًا ترك رسالة هنا ونعاود الاتصال بك.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap contact-grid">
+    <div>
+      <h2 class="h2">اطلب عرض سعر</h2>
+      <p class="dim" style="margin-top:.4rem">املأ ما تعرفه، والباقي نسألك عنه.</p>
+
+      <form class="form" action="https://formsubmit.co/{{email}}" method="POST">
+        <input type="hidden" name="_subject" value="طلب جديد من موقع زيفورا">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="{{url}}/thanks.html">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form__row">
+          <div class="field">
+            <label for="f-name">الاسم</label>
+            <input id="f-name" name="الاسم" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-company">اسم الشركة أو المصنع <small>(اختياري)</small></label>
+            <input id="f-company" name="الشركة" type="text" autocomplete="organization">
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-phone">رقم الهاتف</label>
+            <input id="f-phone" name="الهاتف" type="tel" inputmode="tel" autocomplete="tel" placeholder="09X XXX XXXX" required>
+          </div>
+          <div class="field">
+            <label for="f-email">البريد الإلكتروني <small>(اختياري)</small></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" dir="ltr">
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-product">المادة المطلوبة</label>
+            <select id="f-product" name="المادة">
+              <option value="غير محدّدة">اختر المادة</option>
+              <option data-key="sles">SLES 70% — سلفات لوريل إيثر الصوديوم</option>
+              <option data-key="labsa">LABSA 96% — حمض السلفونيك</option>
+              <option data-key="hypo">هيبوكلوريت الصوديوم 12%</option>
+              <option data-key="multi">أكثر من مادة</option>
+              <option data-key="other">سؤال آخر</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-qty">الكمية التقريبية <small>(اختياري)</small></label>
+            <input id="f-qty" name="الكمية" type="text" placeholder="مثلًا: 5 أطنان أو 20 برميلًا">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-msg">رسالتك <small>(اختياري)</small></label>
+          <textarea id="f-msg" name="الرسالة" rows="5" placeholder="أي تفاصيل تساعدنا: الاستخدام، المواصفات المطلوبة، أسئلتك…"></textarea>
+        </div>
+        <button class="btn" type="submit">إرسال الطلب</button>
+        <p class="form__hint">نستخدم بياناتك للردّ على طلبك فقط. <a href="privacy.html">سياسة الخصوصية</a></p>
+      </form>
+    </div>
+
+    <aside aria-label="بيانات التواصل">
+      <div class="channels">
+        <a class="channel" href="tel:{{phone}}">
+          <span class="channel__icon">{{icon:phone}}</span>
+          <span class="channel__k">اتصال هاتفي</span>
+          <span class="channel__v latin">{{phone_display}}</span>
+        </a>
+        <a class="channel" href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">
+          <span class="channel__icon">{{icon:whatsapp}}</span>
+          <span class="channel__k">واتساب</span>
+          <span class="channel__v latin">{{phone_display}}</span>
+        </a>
+        <a class="channel" href="mailto:{{email}}">
+          <span class="channel__icon">{{icon:mail}}</span>
+          <span class="channel__k">البريد الإلكتروني</span>
+          <span class="channel__v latin">{{email}}</span>
+        </a>
+        <a class="channel" href="{{map}}" target="_blank" rel="noopener">
+          <span class="channel__icon">{{icon:pin}}</span>
+          <span class="channel__k">العنوان</span>
+          <span class="channel__v">{{city}}</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section section--line" id="map" aria-labelledby="map-title">
+  <div class="wrap">
+    <div class="locate-head">
+      <div>
+        <p class="eyebrow">الموقع</p>
+        <h2 class="h2" id="map-title">بودزيرة — بنغازي</h2>
+      </div>
+      <a class="link-arrow" href="{{map}}" target="_blank" rel="noopener">افتح في خرائط جوجل</a>
+    </div>
+    <div class="map corners reveal">
+      <iframe src="https://www.google.com/maps?q={{lat}},{{lng}}&amp;hl=ar&amp;z=16&amp;output=embed" title="موقع زيفورا على الخريطة — بودزيرة، بنغازي" referrerpolicy="no-referrer-when-downgrade" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="map-bar">
+      <p class="map-bar__addr">{{icon:pin}}<span><b>{{legal_name}}</b><span>{{city}}، ليبيا</span></span></p>
+      <div class="btn-row">
+        <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination={{lat}},{{lng}}" target="_blank" rel="noopener">الاتجاهات إلى موقعنا</a>
+        <a class="btn" href="{{map}}" target="_blank" rel="noopener">{{icon:pin}}افتح في خرائط جوجل</a>
+      </div>
+    </div>
+  </div>
+</section>

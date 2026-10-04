@@ -1,0 +1,78 @@
+<header class="page-head">
+  <div class="wrap">
+    {{crumbs}}
+    <h1 class="h1">عن زيفورا</h1>
+    <p class="lead">شركة ليبية في بنغازي، تستورد المواد الخام للصناعات الكيميائية وتوفّرها للمصانع والموزّعين.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">من نحن</p>
+      <h2 class="h2">ثلاث مواد نعرفها جيدًا، بدل قائمة طويلة</h2>
+      <div class="prose dim" style="margin-top:1.25rem">
+        <p>اسمنا الكامل «{{legal_name}}». نعمل من بنغازي، ونستورد المواد التي تقوم عليها صناعة المنظّفات والتعقيم في ليبيا.</p>
+        <p>اخترنا أن نبدأ بثلاث مواد فقط: <span class="latin">SLES</span> و<span class="latin">LABSA</span> وهيبوكلوريت الصوديوم. هذا التركيز يسمح لنا بمعرفة كل مادة جيدًا، ومتابعة جودتها من شحنة إلى أخرى، والإجابة عن أسئلتك بدقة.</p>
+      </div>
+    </div>
+    <ul class="points" role="list" data-stagger>
+      <li class="reveal">{{icon:globe}}<h3 class="h3">منشأ واضح</h3><p>تعرف من أين تأتي كل مادة قبل أن تشتري.</p></li>
+      <li class="reveal">{{icon:doc}}<h3 class="h3">مواصفات مكتوبة</h3><p>نعطيك مواصفات الشحنة المتوفرة، لا وعودًا عامة.</p></li>
+      <li class="reveal">{{icon:phone}}<h3 class="h3">تواصل مباشر</h3><p>تتحدّث مع الشركة نفسها، بلا وسطاء.</p></li>
+      <li class="reveal">{{icon:stamp}}<h3 class="h3">تعامل رسمي</h3><p>شركة مسجّلة، وكل عملية بيع بفاتورة.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tint" aria-labelledby="origins-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">المنشأ</p>
+      <h2 class="h2" id="origins-title">من أين تأتي موادنا</h2>
+      <p class="lead">اخترنا لكل مادة البلد الذي يناسبها، جودةً وقربًا.</p>
+    </div>
+    <div class="origins" data-stagger>
+      <div class="origin reveal">
+        <p class="origin__country">الصين</p>
+        <p class="origin__what"><a href="sles.html"><span class="mono">SLES 70%</span></a></p>
+        <p class="dim small" style="margin-top:.6rem">من أكبر منتجي مواد المنظّفات في العالم، بإنتاج كبير وجودة ثابتة.</p>
+      </div>
+      <div class="origin reveal">
+        <p class="origin__country">السعودية</p>
+        <p class="origin__what"><a href="labsa.html"><span class="mono">LABSA 96%</span></a></p>
+        <p class="dim small" style="margin-top:.6rem">يُصنع من مشتقات البترول، والصناعة البتروكيماوية السعودية قريبة من مصدر مادته الخام.</p>
+      </div>
+      <div class="origin reveal">
+        <p class="origin__country">مصر</p>
+        <p class="origin__what"><a href="sodium-hypochlorite.html"><span class="mono">NaOCl 12%</span></a></p>
+        <p class="dim small" style="margin-top:.6rem">قريبة من ليبيا، وهذا مهم لمادة يقلّ تركيزها كلما طال شحنها وتخزينها.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="registry" aria-labelledby="registry-title">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">التسجيل</p>
+      <h2 class="h2" id="registry-title">بيانات الشركة</h2>
+      <p class="lead" style="margin-top:.75rem">شركة مسجّلة رسميًا في ليبيا. يمكنك الاطلاع على بياناتنا قبل أي تعامل.</p>
+      <div class="btn-row" style="margin-top:1.5rem">
+        <a class="btn btn--ghost" href="contact.html#map">{{icon:pin}}موقعنا على الخريطة</a>
+        <a class="btn" href="contact.html">تواصل معنا</a>
+      </div>
+    </div>
+    <div class="registry reveal">
+      <div class="registry__head">
+        <img src="assets/img/brand/mark-160.png" width="160" height="148" alt="" loading="lazy">
+        <div><strong>{{name}}</strong><p>{{legal_name_en}}</p></div>
+      </div>
+      <dl>
+          {{registry}}
+      </dl>
+    </div>
+  </div>
+</section>
+
+{{include:cta}}

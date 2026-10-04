@@ -1,0 +1,113 @@
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <p class="eyebrow">استيراد مواد خام · بنغازي</p>
+      <h1 class="h1">مواد خام للمنظّفات والتعقيم، نستوردها لك من مصدرها.</h1>
+      <p class="lead">زيفورا شركة ليبية تستورد ثلاث مواد يحتاجها كل مصنع منظّفات وكل محطة مياه: <span class="latin">SLES</span> و<span class="latin">LABSA</span> وهيبوكلوريت الصوديوم. أخبرنا بما تحتاجه، ونرسل لك السعر والمواصفات.</p>
+      <div class="btn-row">
+        <a class="btn" href="contact.html">اطلب عرض سعر</a>
+        <a class="btn btn--ghost" href="#products">تعرّف على المنتجات</a>
+      </div>
+      <p class="hero__note">
+        <span>{{icon:phone}}<a href="tel:{{phone}}" class="latin">{{phone_display}}</a></span>
+        <span>{{icon:pin}}{{city}}</span>
+      </p>
+    </div>
+
+    <figure class="gauge reveal" aria-labelledby="gauge-cap">
+      <div class="gauge__head"><strong>ما نستورده</strong><span>التركيز · المنشأ</span></div>
+      <div class="gauge__row">
+        <a class="gauge__item" href="sles.html">
+          {{barrel:sles}}
+          <span class="gauge__pct">70%</span>
+          <span class="gauge__name">SLES</span>
+          <span class="gauge__origin">الصين</span>
+        </a>
+        <a class="gauge__item" href="labsa.html">
+          {{barrel:labsa}}
+          <span class="gauge__pct">96%</span>
+          <span class="gauge__name">LABSA</span>
+          <span class="gauge__origin">السعودية</span>
+        </a>
+        <a class="gauge__item" href="sodium-hypochlorite.html">
+          {{barrel:hypo}}
+          <span class="gauge__pct">12%</span>
+          <span class="gauge__name">NaOCl</span>
+          <span class="gauge__origin">مصر</span>
+        </a>
+      </div>
+      <figcaption class="gauge__foot" id="gauge-cap">ارتفاع السائل في كل برميل يساوي تركيز المادة الفعّالة فيه، ولونه هو لون المادة الحقيقي.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="wrap">
+  <dl class="facts" data-stagger>
+    <div class="fact reveal"><dt class="fact__k">ما نستورده</dt><dd class="fact__v">ثلاث مواد فقط، نعرفها جيدًا</dd></div>
+    <div class="fact reveal"><dt class="fact__k">المنشأ</dt><dd class="fact__v">الصين · السعودية · مصر</dd></div>
+    <div class="fact reveal"><dt class="fact__k">نتعامل مع</dt><dd class="fact__v">المصانع والموزّعين وتجّار الجملة</dd></div>
+    <div class="fact reveal"><dt class="fact__k">المقر</dt><dd class="fact__v">{{city}}</dd></div>
+  </dl>
+</div>
+
+<section class="section" id="products" aria-labelledby="products-title">
+  <div class="wrap">
+    <div class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">المنتجات</p>
+        <h2 class="h2" id="products-title">ثلاث مواد، لكل واحدة عملها</h2>
+        <p class="lead">إن لم تكن من أهل المجال، فهذا باختصار ما تفعله كل مادة وأين تُستخدم.</p>
+      </div>
+      <a class="link-arrow" href="products.html">مقارنة المنتجات والأسئلة الشائعة</a>
+    </div>
+    {{include:products-list}}
+  </div>
+</section>
+
+<section class="section section--tint" aria-labelledby="guide-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">دليل سريع</p>
+      <h2 class="h2" id="guide-title">ماذا تصنع؟ هذا ما تحتاجه</h2>
+      <p class="lead">ابحث عن منتجك في القائمة لتعرف المادة الخام الأساسية التي يقوم عليها.</p>
+    </div>
+    <table class="guide reveal">
+      <thead><tr><th scope="col">إذا كنت تصنع</th><th scope="col">فالمادة الأساسية هي</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">الشامبو وجل الاستحمام</th><td><a class="chip chip--sles" href="sles.html"><i></i>SLES 70%</a></td></tr>
+        <tr><th scope="row">الصابون السائل لليدين</th><td><a class="chip chip--sles" href="sles.html"><i></i>SLES 70%</a></td></tr>
+        <tr><th scope="row">سائل الجلي</th><td><a class="chip chip--labsa" href="labsa.html"><i></i>LABSA 96%</a><a class="chip chip--sles" href="sles.html"><i></i>SLES 70%</a></td></tr>
+        <tr><th scope="row">مسحوق الغسيل</th><td><a class="chip chip--labsa" href="labsa.html"><i></i>LABSA 96%</a></td></tr>
+        <tr><th scope="row">منظّفات الأرضيات والأسطح</th><td><a class="chip chip--labsa" href="labsa.html"><i></i>LABSA 96%</a></td></tr>
+        <tr><th scope="row">الكلور المنزلي (المبيّض)</th><td><a class="chip chip--hypo" href="sodium-hypochlorite.html"><i></i>NaOCl 12%</a></td></tr>
+        <tr><th scope="row">تعقيم المياه والخزانات والمسابح</th><td><a class="chip chip--hypo" href="sodium-hypochlorite.html"><i></i>NaOCl 12%</a></td></tr>
+      </tbody>
+    </table>
+    <p class="spec-note">هذه هي المادة الأساسية فقط؛ كل تركيبة تحتاج إلى مواد أخرى بنسب تختلف من مصنع لآخر.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="steps-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">طريقة العمل</p>
+      <h2 class="h2" id="steps-title">من السؤال إلى الفاتورة</h2>
+    </div>
+    <ol class="steps" role="list" data-stagger>
+      <li class="step reveal">
+        <h3>أخبرنا بما تحتاجه</h3>
+        <p>المادة والكمية التقريبية، بالهاتف أو واتساب أو من نموذج التواصل.</p>
+      </li>
+      <li class="step reveal">
+        <h3>نرسل لك السعر والمواصفات</h3>
+        <p>السعر الحالي ومواصفات الشحنة المتوفرة، لتقرّر وأنت مطمئن.</p>
+      </li>
+      <li class="step reveal">
+        <h3>نتّفق ونُتمّ البيع</h3>
+        <p>نؤكّد معك الكمية والسعر، وتتمّ العملية بفاتورة رسمية.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+{{include:cta}}

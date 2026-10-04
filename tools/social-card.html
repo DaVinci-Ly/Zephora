@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- مصدر بطاقة المشاركة (1200×630). تُصوَّر بـ: sh tools/build_social_card.sh -->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../assets/css/main.css">
+<style>
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { display: block; background: var(--paper); }
+  .card { position: relative; width: 1200px; height: 630px; display: grid; grid-template-columns: 1fr 380px; align-items: center; padding: 0 96px; gap: 40px; }
+  .card::before { content: ""; position: absolute; inset: 28px; border: 1.5px solid var(--line-strong); border-radius: 4px; pointer-events: none; }
+  .name { font-size: 112px; font-weight: 700; color: var(--navy); line-height: 1.05; }
+  .sc-tag { font-size: 30px; color: var(--ink-2); margin-top: 18px; white-space: nowrap; }
+  .sc-codes { display: flex; gap: 14px; margin-top: 44px; direction: rtl; }
+  .sc-codes span { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; border: 1.5px solid var(--line-strong); border-radius: 4px; font-family: var(--ff-mono); font-size: 24px; direction: ltr; white-space: nowrap; background: #fff; color: var(--ink); }
+  .sc-codes i { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.2); }
+  .url { position: absolute; bottom: 56px; right: 96px; font-family: var(--ff-mono); font-size: 22px; color: var(--ink-3); direction: ltr; }
+  .city { position: absolute; bottom: 56px; left: 96px; font-size: 22px; color: var(--ink-3); }
+  .mark { width: 360px; justify-self: center; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div>
+      <div class="name">زيفورا</div>
+      <div class="sc-tag">لاستيراد المواد الخام والمواد الكيميائية</div>
+      <div class="sc-codes">
+        <span><i style="background:var(--sles)"></i>SLES 70%</span>
+        <span><i style="background:var(--labsa)"></i>LABSA 96%</span>
+        <span><i style="background:var(--hypo)"></i>NaOCl 12%</span>
+      </div>
+    </div>
+    <img class="mark" src="../assets/img/brand/mark.png" alt="">
+    <div class="url">zephora.ly</div>
+    <div class="city">بنغازي، ليبيا</div>
+  </div>
+</body>
+</html>
