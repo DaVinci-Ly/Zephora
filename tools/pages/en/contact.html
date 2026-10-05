@@ -1,0 +1,114 @@
+<header class="page-head">
+  <div class="wrap">
+    {{crumbs}}
+    <h1 class="h1">Contact us</h1>
+    <p class="lead">The fastest way is to call or message us on WhatsApp. You can also leave a message here and we'll call you back.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap contact-grid">
+    <div>
+      <h2 class="h2">Request a quote</h2>
+      <p class="dim" style="margin-top:.4rem">Fill in what you know, and we'll ask about the rest.</p>
+
+      <form class="form" action="https://formsubmit.co/{{email}}" method="POST">
+        <input type="hidden" name="_subject" value="New request from the Zephora website (English)">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="{{url}}/{{prefix}}thanks.html">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form__row">
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="Name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-company">Company or factory <small>(optional)</small></label>
+            <input id="f-company" name="Company" type="text" autocomplete="organization">
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-phone">Phone number</label>
+            <input id="f-phone" name="Phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09X XXX XXXX" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email <small>(optional)</small></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" dir="ltr">
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-product">Material needed</label>
+            <select id="f-product" name="Product" data-product-select>
+              <option value="Not specified">Choose a material</option>
+              <option data-key="sles">SLES 70% — Sodium Lauryl Ether Sulfate</option>
+              <option data-key="labsa">LABSA 96% — Sulfonic Acid</option>
+              <option data-key="hypo">Sodium Hypochlorite 12%</option>
+              <option data-key="multi">More than one material</option>
+              <option data-key="other">Another question</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-qty">Approximate quantity <small>(optional)</small></label>
+            <input id="f-qty" name="Quantity" type="text" placeholder="e.g. 5 tonnes or 20 barrels">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-msg">Your message <small>(optional)</small></label>
+          <textarea id="f-msg" name="Message" rows="5" placeholder="Any details that help us: the use, required specifications, your questions…"></textarea>
+        </div>
+        <button class="btn" type="submit">Send request</button>
+        <p class="form__hint">We use your details only to reply to your request. <a href="privacy.html">Privacy policy</a></p>
+      </form>
+    </div>
+
+    <aside aria-label="Contact details">
+      <div class="channels">
+        <a class="channel" href="tel:{{phone}}">
+          <span class="channel__icon">{{icon:phone}}</span>
+          <span class="channel__k">Phone</span>
+          <span class="channel__v latin">{{phone_display}}</span>
+        </a>
+        <a class="channel" href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">
+          <span class="channel__icon">{{icon:whatsapp}}</span>
+          <span class="channel__k">WhatsApp</span>
+          <span class="channel__v latin">{{phone_display}}</span>
+        </a>
+        <a class="channel" href="mailto:{{email}}">
+          <span class="channel__icon">{{icon:mail}}</span>
+          <span class="channel__k">Email</span>
+          <span class="channel__v latin">{{email}}</span>
+        </a>
+        <a class="channel" href="{{map}}" target="_blank" rel="noopener">
+          <span class="channel__icon">{{icon:pin}}</span>
+          <span class="channel__k">Address</span>
+          <span class="channel__v">{{city}}</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section section--line" id="map" aria-labelledby="map-title">
+  <div class="wrap">
+    <div class="locate-head">
+      <div>
+        <p class="eyebrow">Location</p>
+        <h2 class="h2" id="map-title">Boudzira — Benghazi</h2>
+      </div>
+      <a class="link-arrow" href="{{map}}" target="_blank" rel="noopener">Open in Google Maps</a>
+    </div>
+    <div class="map corners reveal">
+      <iframe src="https://www.google.com/maps?q={{lat}},{{lng}}&amp;hl=en&amp;z=16&amp;output=embed" title="Zephora location on the map — Boudzira, Benghazi" referrerpolicy="no-referrer-when-downgrade" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="map-bar">
+      <p class="map-bar__addr">{{icon:pin}}<span><b>{{legal_name}}</b><span>{{city}}, Libya</span></span></p>
+      <div class="btn-row">
+        <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination={{lat}},{{lng}}" target="_blank" rel="noopener">Get directions</a>
+        <a class="btn" href="{{map}}" target="_blank" rel="noopener">{{icon:pin}}Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>

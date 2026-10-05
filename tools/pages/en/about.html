@@ -1,0 +1,78 @@
+<header class="page-head">
+  <div class="wrap">
+    {{crumbs}}
+    <h1 class="h1">About Zephora</h1>
+    <p class="lead">A Libyan company in Benghazi that imports raw materials for the chemical industries and supplies them to factories and distributors.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Who we are</p>
+      <h2 class="h2">Three materials we know well, instead of a long list</h2>
+      <div class="prose dim" style="margin-top:1.25rem">
+        <p>Our full name is “{{legal_name}}”. We work from Benghazi and import the materials that detergent manufacturing and disinfection in Libya are built on.</p>
+        <p>We chose to start with just three materials: <span class="latin">SLES</span>, <span class="latin">LABSA</span> and sodium hypochlorite. This focus lets us know each material well, follow its quality from one shipment to the next, and answer your questions accurately.</p>
+      </div>
+    </div>
+    <ul class="points" role="list" data-stagger>
+      <li class="reveal">{{icon:globe}}<h3 class="h3">Clear origin</h3><p>You know where each material comes from before you buy.</p></li>
+      <li class="reveal">{{icon:doc}}<h3 class="h3">Written specifications</h3><p>We give you the specifications of the shipment in stock, not general promises.</p></li>
+      <li class="reveal">{{icon:phone}}<h3 class="h3">Direct contact</h3><p>You talk to the company itself, with no middlemen.</p></li>
+      <li class="reveal">{{icon:stamp}}<h3 class="h3">Formal dealing</h3><p>A registered company, and every sale comes with an invoice.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tint" aria-labelledby="origins-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Origin</p>
+      <h2 class="h2" id="origins-title">Where our materials come from</h2>
+      <p class="lead">For each material we chose the country that suits it best, for quality and proximity.</p>
+    </div>
+    <div class="origins" data-stagger>
+      <div class="origin reveal">
+        <p class="origin__country">China</p>
+        <p class="origin__what"><a href="sles.html"><span class="mono">SLES 70%</span></a></p>
+        <p class="dim small" style="margin-top:.6rem">One of the world's largest producers of detergent materials, with high output and steady quality.</p>
+      </div>
+      <div class="origin reveal">
+        <p class="origin__country">Saudi Arabia</p>
+        <p class="origin__what"><a href="labsa.html"><span class="mono">LABSA 96%</span></a></p>
+        <p class="dim small" style="margin-top:.6rem">Made from petroleum derivatives, and the Saudi petrochemical industry is close to the source of its raw material.</p>
+      </div>
+      <div class="origin reveal">
+        <p class="origin__country">Egypt</p>
+        <p class="origin__what"><a href="sodium-hypochlorite.html"><span class="mono">NaOCl 12%</span></a></p>
+        <p class="dim small" style="margin-top:.6rem">Close to Libya, which matters for a material that loses strength the longer it is shipped and stored.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="registry" aria-labelledby="registry-title">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Registration</p>
+      <h2 class="h2" id="registry-title">Company details</h2>
+      <p class="lead" style="margin-top:.75rem">An officially registered company in Libya. You can review our details before any dealing.</p>
+      <div class="btn-row" style="margin-top:1.5rem">
+        <a class="btn btn--ghost" href="contact.html#map">{{icon:pin}}Our location on the map</a>
+        <a class="btn" href="contact.html">Contact us</a>
+      </div>
+    </div>
+    <div class="registry reveal">
+      <div class="registry__head">
+        <img src="{{root}}assets/img/brand/mark-160.png" width="160" height="148" alt="" loading="lazy">
+        <div><strong>{{name}}</strong><p lang="ar" dir="rtl">{{legal_name_ar}}</p></div>
+      </div>
+      <dl>
+          {{registry}}
+      </dl>
+    </div>
+  </div>
+</section>
+
+{{include:cta}}

@@ -1,39 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://zephora.ly/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/"/>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/"/>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://zephora.ly/products.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/products.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/products.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/products.html"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/products.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/products.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/products.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/products.html"/>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://zephora.ly/sles.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/sles.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/sles.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/sles.html"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/sles.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/sles.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/sles.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/sles.html"/>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://zephora.ly/labsa.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/labsa.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/labsa.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/labsa.html"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/labsa.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/labsa.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/labsa.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/labsa.html"/>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://zephora.ly/sodium-hypochlorite.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/sodium-hypochlorite.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/sodium-hypochlorite.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/sodium-hypochlorite.html"/>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/sodium-hypochlorite.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/sodium-hypochlorite.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/sodium-hypochlorite.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/sodium-hypochlorite.html"/>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://zephora.ly/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/about.html"/>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/about.html"/>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://zephora.ly/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/contact.html"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/contact.html"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://zephora.ly/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/privacy.html"/>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/privacy.html"/>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://zephora.ly/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/terms.html"/>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://zephora.ly/en/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://zephora.ly/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://zephora.ly/en/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zephora.ly/terms.html"/>
     <priority>0.3</priority>
   </url>
 </urlset>

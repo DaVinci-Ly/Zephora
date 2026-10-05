@@ -22,9 +22,9 @@
 <body>
   <div class="card">
     <div>
-      <div class="name">زيفورا</div>
-      <div class="sc-tag">لاستيراد المواد الخام والمواد الكيميائية</div>
-      <div class="sc-codes">
+      <div class="name" data-en="Zephora">زيفورا</div>
+      <div class="sc-tag" data-en="Import of raw materials &amp; chemicals">لاستيراد المواد الخام والمواد الكيميائية</div>
+      <div class="sc-codes" style="direction:inherit">
         <span><i style="background:var(--sles)"></i>SLES 70%</span>
         <span><i style="background:var(--labsa)"></i>LABSA 96%</span>
         <span><i style="background:var(--hypo)"></i>NaOCl 12%</span>
@@ -32,7 +32,17 @@
     </div>
     <img class="mark" src="../assets/img/brand/mark.png" alt="">
     <div class="url">zephora.ly</div>
-    <div class="city">بنغازي، ليبيا</div>
+    <div class="city" data-en="Benghazi, Libya">بنغازي، ليبيا</div>
   </div>
+<script>
+  // ?lang=en يحوّل البطاقة إلى الإنجليزية
+  if (location.search.indexOf("lang=en") > -1) {
+    document.documentElement.lang = "en"; document.documentElement.dir = "ltr";
+    document.documentElement.style.setProperty("--ff", '-apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif');
+    document.querySelectorAll("[data-en]").forEach(function (e) { e.innerHTML = e.getAttribute("data-en"); });
+    document.querySelector(".name").style.letterSpacing = "-0.02em";
+    document.querySelector(".sc-tag").style.fontSize = "28px";
+  }
+</script>
 </body>
 </html>

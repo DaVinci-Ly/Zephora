@@ -15,7 +15,7 @@
       <form class="form" action="https://formsubmit.co/{{email}}" method="POST">
         <input type="hidden" name="_subject" value="طلب جديد من موقع زيفورا">
         <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="{{url}}/thanks.html">
+        <input type="hidden" name="_next" value="{{url}}/{{prefix}}thanks.html">
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <div class="form__row">
@@ -41,7 +41,7 @@
         <div class="form__row">
           <div class="field">
             <label for="f-product">المادة المطلوبة</label>
-            <select id="f-product" name="المادة">
+            <select id="f-product" name="المادة" data-product-select>
               <option value="غير محدّدة">اختر المادة</option>
               <option data-key="sles">SLES 70% — سلفات لوريل إيثر الصوديوم</option>
               <option data-key="labsa">LABSA 96% — حمض السلفونيك</option>

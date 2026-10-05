@@ -1,0 +1,97 @@
+<header class="page-head">
+  <div class="wrap">
+    {{crumbs}}
+    <h1 class="h1">Our products</h1>
+    <p class="lead">We import just three materials and focus on them, so we know every detail: where each comes from, how it is stored and where it is used.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    {{include:products-list}}
+  </div>
+</section>
+
+<section class="section section--tint" aria-labelledby="compare-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Quick comparison</p>
+      <h2 class="h2" id="compare-title">The three materials side by side</h2>
+    </div>
+    <div class="table-scroll reveal" role="region" aria-labelledby="compare-title" tabindex="0">
+      <table class="compare">
+        <thead>
+          <tr><th scope="col">Material</th><th scope="col">Common name</th><th scope="col">Form</th><th scope="col">Concentration</th><th scope="col">Origin</th><th scope="col">Main uses</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a class="chip chip--sles" href="sles.html"><i></i>SLES</a></th>
+            <td>Texapon</td><td>Pale viscous paste</td><td><span class="latin">70%</span></td><td>China</td>
+            <td>Shampoo, liquid soap, dishwashing liquid</td>
+          </tr>
+          <tr>
+            <th scope="row"><a class="chip chip--labsa" href="labsa.html"><i></i>LABSA</a></th>
+            <td>Sulfonic acid</td><td>Viscous brown liquid</td><td><span class="latin">96%</span></td><td>Saudi Arabia</td>
+            <td>Washing powder, dishwashing liquid, floor cleaners</td>
+          </tr>
+          <tr>
+            <th scope="row"><a class="chip chip--hypo" href="sodium-hypochlorite.html"><i></i>NaOCl</a></th>
+            <td>Liquid chlorine</td><td>Yellow-green liquid</td><td><span class="latin">12%</span></td><td>Egypt</td>
+            <td>Water treatment, disinfection, household bleach</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="wrap narrow">
+    <div class="section-head">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="h2" id="faq-title">Questions we hear often</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>What is the difference between <span class="latin">SLES</span> and <span class="latin">LABSA</span>?</summary>
+        <div>
+          <p>Both are cleaning agents, but each has its own role. <span class="latin">SLES</span> is gentle on the hands and gives thick foam, so it goes into shampoo and liquid soap.</p>
+          <p><span class="latin">LABSA</span> is stronger at removing grease and dirt, so it is the base of washing powder and floor cleaners. Dishwashing liquid usually combines the two.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Can sodium hypochlorite 12% be used at home as it is?</summary>
+        <div>
+          <p>No. Its concentration is much higher than household bleach, which is usually between 3% and 6%. It must be diluted with water before use, and handled with gloves.</p>
+          <p>Never mix it with acids or with cleaners containing ammonia, because this releases a toxic gas.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Why does sodium hypochlorite weaken over time?</summary>
+        <div>
+          <p>Because it breaks down gradually, faster with heat and sunlight. Store it in a dark, cool place and use it within a few months of receiving it.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Why don't you publish prices on the website?</summary>
+        <div>
+          <p>Prices change with each shipment and with the exchange rate. Call us or write to us with the material and quantity, and we'll give you the current price.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Can I see the specifications before buying?</summary>
+        <div>
+          <p>Yes. Ask us for the specification sheet of the shipment in stock and review it before you decide.</p>
+        </div>
+      </details>
+      <details>
+        <summary>What does the percentage next to each material mean?</summary>
+        <div>
+          <p>It is the share of active matter. For example <span class="latin">SLES 70%</span> means every 100 kilograms contain about 70 kilograms of active matter, and the rest is mostly water.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+{{include:cta}}

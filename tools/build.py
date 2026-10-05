@@ -1,94 +1,160 @@
-"""يبني صفحات الموقع من القالب ومن محتوى الصفحات في tools/pages/.
+"""يبني صفحات الموقع (العربية في الجذر، والإنجليزية في en/) من القالب ومحتوى tools/pages/.
 
     python3 tools/build.py
 
-الملفات الناتجة في جذر المستودع هي ما ينشره GitHub Pages مباشرة، فلا خطوة بناء
-عند النشر. عدّل المحتوى في tools/pages/ أو البيانات في SITE ثم أعد التشغيل.
+الملفات الناتجة هي ما ينشره GitHub Pages مباشرة، فلا خطوة بناء عند النشر.
+عدّل المحتوى في tools/pages/ (العربية) أو tools/pages/en/ (الإنجليزية)، أو البيانات
+في SITE والنصوص في UI ثم أعد التشغيل.
 
 داخل ملفات المحتوى:
-    {{key}}            قيمة من SITE (مثل {{phone_display}})
+    {{key}}            قيمة من SITE بلغة الصفحة (مثل {{phone_display}})
     {{barrel:sles}}    برميل التركيز للمادة (sles | labsa | hypo)
-    {{icon:phone}}     أيقونة من ICONS
-    {{include:name}}   ملف من tools/pages/_partials/
+    {{icon:phone}}     أيقونة من _I
+    {{include:name}}   ملف من tools/pages/_partials/ (أو en/_partials/)
+    {{base}}           بادئة روابط الصفحات     {{root}}  بادئة مسار الجذر للملفات الثابتة
 """
 import json, os, re
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 PAGES_DIR = os.path.join(ROOT, 'tools', 'pages')
 
+LANGS = {
+    'ar': dict(dir='rtl', prefix='', locale='ar_LY', card='social-card.jpg'),
+    'en': dict(dir='ltr', prefix='en/', locale='en_US', card='social-card-en.jpg'),
+}
+
 # --------------------------------------------------------------- بيانات الشركة
 SITE = {
     'url': 'https://zephora.ly',
-    'name': 'زيفورا',
     'name_en': 'Zephora',
-    'legal_name': 'شركة زيفورا لاستيراد المواد الخام والمواد الكيميائية',
+    'legal_name_ar': 'شركة زيفورا لاستيراد المواد الخام والمواد الكيميائية',
     'legal_name_en': 'Zephora for the Import of Raw Materials and Chemicals',
-    'tagline': 'لاستيراد المواد الخام والكيميائية',
     'phone': '+218942228899',
     'phone_display': '094 222 8899',
     'whatsapp': '218942228899',
     'email': 'info@zephora.ly',
-    'city': 'بودزيرة، بنغازي',
-    'district': 'بودزيرة',
     'map': 'https://maps.app.goo.gl/4NXWzondp5onHd6x9',
     'lat': 32.1618621,
     'lng': 20.1157743,
     # البيانات القانونية — تظهر في الموقع فور تعبئتها
-    'cr': '1825',        # رقم السجل التجاري
-    'tax': '1685',       # الرقم الضريبي
+    'cr': '1825',          # رقم السجل التجاري
+    'tax': '1685',         # الرقم الضريبي
     'chamber': '13/875',   # رقم القيد في الغرفة التجارية
-    'chamber_name': 'غرفة تجارة طبرق',
+    # رمز التحقق من Google Search Console (طريقة وسم HTML) — اتركه فارغًا إن وثّقت النطاق عبر DNS
+    'gsc': '',
 }
 
+# ما يختلف باختلاف اللغة
+SITE_L = {
+    'ar': dict(
+        name='زيفورا', legal_name='شركة زيفورا لاستيراد المواد الخام والمواد الكيميائية',
+        tagline='لاستيراد المواد الخام والكيميائية', city='بودزيرة، بنغازي', district='بودزيرة',
+        locality='بنغازي', chamber_name='غرفة تجارة طبرق'),
+    'en': dict(
+        name='Zephora', legal_name='Zephora for the Import of Raw Materials and Chemicals',
+        tagline='Raw materials & chemicals import', city='Boudzira, Benghazi', district='Boudzira',
+        locality='Benghazi', chamber_name='Tobruk Chamber of Commerce'),
+}
+
+def S(lang):
+    return {**SITE, **SITE_L[lang]}
+
 PRODUCTS = {
-    'sles':  {'page': 'sles.html', 'code': 'SLES 70%', 'name': 'سلفات لوريل إيثر الصوديوم', 'pct': 70, 'origin': 'الصين', 'short': '<span class="latin">SLES 70%</span> (تكسابون)'},
-    'labsa': {'page': 'labsa.html', 'code': 'LABSA 96%', 'name': 'حمض السلفونيك', 'pct': 96, 'origin': 'السعودية', 'short': '<span class="latin">LABSA 96%</span> (سلفونيك)'},
-    'hypo':  {'page': 'sodium-hypochlorite.html', 'code': 'NaOCl 12%', 'name': 'هيبوكلوريت الصوديوم', 'pct': 12, 'origin': 'مصر', 'short': 'هيبوكلوريت الصوديوم <span class="latin">12%</span>'},
+    'sles': {'page': 'sles.html', 'pct': 70,
+             'short': {'ar': '<span class="latin">SLES 70%</span> (تكسابون)', 'en': '<span class="latin">SLES 70%</span> (Texapon)'}},
+    'labsa': {'page': 'labsa.html', 'pct': 96,
+              'short': {'ar': '<span class="latin">LABSA 96%</span> (سلفونيك)', 'en': '<span class="latin">LABSA 96%</span> (sulfonic acid)'}},
+    'hypo': {'page': 'sodium-hypochlorite.html', 'pct': 12,
+             'short': {'ar': 'هيبوكلوريت الصوديوم <span class="latin">12%</span>', 'en': 'Sodium hypochlorite <span class="latin">12%</span>'}},
+}
+
+# ----------------------------------------------------- نصوص الواجهة المشتركة
+UI = {
+    'ar': dict(
+        skip='تخطَّ إلى المحتوى', home='الرئيسية', nav_aria='القائمة الرئيسية', menu='القائمة',
+        menu_aria='قائمة الجوال', quote='اطلب عرض سعر', call='اتصل:',
+        nav={'products': 'المنتجات', 'about': 'عن الشركة', 'contact': 'تواصل معنا'},
+        footer_about='نستورد المواد الخام لصناعة المنظّفات ومعالجة المياه، ونوفّرها للمصانع والموزّعين من بنغازي.',
+        f_products='المنتجات', f_company='الشركة', f_about='عن الشركة', f_faq='أسئلة شائعة', f_contact='تواصل',
+        rights='جميع الحقوق محفوظة.', dev='تصميم وتطوير', dev_name='ديـوان التقنيـة الليبـي',
+        privacy='الخصوصية', terms='الشروط', legal_nav='روابط ختامية', crumbs_aria='مسار التنقّل',
+        cr='السجل التجاري', tax='الرقم الضريبي', reg_chamber='رقم القيد — {chamber_name}',
+        reg_name='الاسم القانوني', reg_hq='المقر', pending='يُضاف قريبًا',
+        barrel='برميل ممتلئ بنسبة {pct}% يمثّل تركيز المادة',
+        switch_label='English', switch_aria='Switch to English',
+        brand_aria='{name} — الصفحة الرئيسية'),
+    'en': dict(
+        skip='Skip to content', home='Home', nav_aria='Main menu', menu='Menu',
+        menu_aria='Mobile menu', quote='Request a quote', call='Call:',
+        nav={'products': 'Products', 'about': 'About', 'contact': 'Contact'},
+        footer_about='We import raw materials for detergent manufacturing and water treatment, and supply factories and distributors from Benghazi.',
+        f_products='Products', f_company='Company', f_about='About us', f_faq='FAQ', f_contact='Contact',
+        rights='All rights reserved.', dev='Design and development by', dev_name='Libyan Tech Diwan',
+        privacy='Privacy', terms='Terms', legal_nav='Legal links', crumbs_aria='Breadcrumb',
+        cr='Commercial registry', tax='Tax number', reg_chamber='Chamber membership — {chamber_name}',
+        reg_name='Legal name', reg_hq='Location', pending='Coming soon',
+        barrel='Barrel filled to {pct}%, showing the concentration of the product',
+        switch_label='العربية', switch_aria='التبديل إلى العربية',
+        brand_aria='{name} — Home'),
 }
 
 # ---------------------------------------------------------------- الصفحات
-# nav: الرابط المميّز في القائمة | crumbs: مسار التنقّل لبيانات Google
+# nav: الرابط المميّز في القائمة | parent: صفحة الأب لمسار التنقّل | crumb: اسم الصفحة فيه
+def L(ar, en):
+    return {'ar': ar, 'en': en}
+
 PAGES = [
-    dict(src='home', out='index.html', nav='home', schema='org',
-         title='زيفورا لاستيراد المواد الخام | SLES وLABSA وهيبوكلوريت الصوديوم في ليبيا',
-         desc='شركة زيفورا في بنغازي تستورد المواد الخام لصناعة المنظّفات ومعالجة المياه: SLES 70% من الصين، وLABSA 96% من السعودية، وهيبوكلوريت الصوديوم 12% من مصر.'),
-    dict(src='products', out='products.html', nav='products',
-         title='المنتجات: SLES وLABSA وهيبوكلوريت الصوديوم | زيفورا',
-         desc='تعرّف على المواد الثلاث التي تستوردها زيفورا: ما هي، وأين تُستخدم، ومنشأ كل منها وتركيزها، مع إجابات لأكثر الأسئلة شيوعًا.',
-         crumbs=[('المنتجات', 'products.html')]),
-    dict(src='sles', out='sles.html', nav='products',
-         title='SLES 70% (تكسابون) — سلفات لوريل إيثر الصوديوم | زيفورا',
-         desc='SLES 70% منشأ الصين: المادة الأساسية للرغوة في الشامبو والصابون السائل وسائل الجلي. المواصفات وطرق الاستخدام والتخزين، واطلب السعر من زيفورا في بنغازي.',
-         crumbs=[('المنتجات', 'products.html'), ('SLES 70%', 'sles.html')]),
-    dict(src='labsa', out='labsa.html', nav='products',
-         title='LABSA 96% (حمض السلفونيك) — منشأ السعودية | زيفورا',
-         desc='LABSA 96% منشأ السعودية: المادة المنظّفة الأساسية في مسحوق الغسيل وسائل الجلي ومنظّفات الأرضيات. المواصفات والاستخدامات والتخزين الآمن.',
-         crumbs=[('المنتجات', 'products.html'), ('LABSA 96%', 'labsa.html')]),
-    dict(src='hypo', out='sodium-hypochlorite.html', nav='products',
-         title='هيبوكلوريت الصوديوم 12% (الكلور السائل) | زيفورا',
-         desc='هيبوكلوريت الصوديوم 12% منشأ مصر لمعالجة المياه والتعقيم وصناعة الكلور المنزلي. المواصفات وطريقة التخفيف وتعليمات السلامة.',
-         crumbs=[('المنتجات', 'products.html'), ('هيبوكلوريت الصوديوم 12%', 'sodium-hypochlorite.html')]),
-    dict(src='about', out='about.html', nav='about', schema='org',
-         title='عن الشركة | زيفورا لاستيراد المواد الخام والكيميائية',
-         desc='زيفورا شركة ليبية في بنغازي تستورد المواد الخام لصناعة المنظّفات والتعقيم. تعرّف علينا وعلى منشأ موادنا وبيانات الشركة الرسمية.',
-         crumbs=[('عن الشركة', 'about.html')]),
-    dict(src='contact', out='contact.html', nav='contact', schema='org',
-         title='تواصل معنا واطلب عرض سعر | زيفورا',
-         desc='اطلب سعر SLES أو LABSA أو هيبوكلوريت الصوديوم من زيفورا في بنغازي. اتصل على 0942228899 أو راسلنا على info@zephora.ly.',
-         crumbs=[('تواصل معنا', 'contact.html')]),
-    dict(src='privacy', out='privacy.html', nav=None,
-         title='سياسة الخصوصية | زيفورا',
-         desc='كيف نتعامل مع بياناتك عند تصفّح موقع زيفورا أو التواصل معنا.',
-         crumbs=[('الخصوصية', 'privacy.html')]),
-    dict(src='terms', out='terms.html', nav=None,
-         title='شروط الاستخدام | زيفورا',
-         desc='شروط استخدام موقع زيفورا لاستيراد المواد الخام والمواد الكيميائية.',
-         crumbs=[('شروط الاستخدام', 'terms.html')]),
+    dict(src='home', out='index.html', nav='home', schema='org', website=True,
+         title=L('زيفورا لاستيراد المواد الخام | SLES وLABSA وهيبوكلوريت الصوديوم في ليبيا',
+                 'Zephora | SLES, LABSA & Sodium Hypochlorite Supplier in Libya'),
+         desc=L('شركة زيفورا في بنغازي تستورد المواد الخام لصناعة المنظّفات ومعالجة المياه: SLES 70% من الصين، وLABSA 96% من السعودية، وهيبوكلوريت الصوديوم 12% من مصر.',
+                'Zephora imports raw materials for detergents and water treatment in Benghazi, Libya: SLES 70% from China, LABSA 96% from Saudi Arabia, and sodium hypochlorite 12% from Egypt.')),
+    dict(src='products', out='products.html', nav='products', crumb=L('المنتجات', 'Products'),
+         title=L('المنتجات: SLES وLABSA وهيبوكلوريت الصوديوم | زيفورا',
+                 'Products: SLES, LABSA & Sodium Hypochlorite | Zephora'),
+         desc=L('تعرّف على المواد الثلاث التي تستوردها زيفورا: ما هي، وأين تُستخدم، ومنشأ كل منها وتركيزها، مع إجابات لأكثر الأسئلة شيوعًا.',
+                'The three materials Zephora imports: what each one is, where it is used, its origin and concentration, with answers to common questions.')),
+    dict(src='sles', out='sles.html', nav='products', parent='products', crumb=L('SLES 70%', 'SLES 70%'),
+         title=L('SLES 70% (تكسابون) — سلفات لوريل إيثر الصوديوم | زيفورا',
+                 'SLES 70% (Texapon) — Sodium Lauryl Ether Sulfate | Zephora'),
+         desc=L('SLES 70% منشأ الصين: المادة الأساسية للرغوة في الشامبو والصابون السائل وسائل الجلي. المواصفات وطرق الاستخدام والتخزين، واطلب السعر من زيفورا في بنغازي.',
+                'SLES 70% from China: the foaming base of shampoo, liquid soap and dishwashing liquid. Specifications, uses and storage. Request a price from Zephora in Benghazi.')),
+    dict(src='labsa', out='labsa.html', nav='products', parent='products', crumb=L('LABSA 96%', 'LABSA 96%'),
+         title=L('LABSA 96% (حمض السلفونيك) — منشأ السعودية | زيفورا',
+                 'LABSA 96% (Sulfonic Acid) — Origin Saudi Arabia | Zephora'),
+         desc=L('LABSA 96% منشأ السعودية: المادة المنظّفة الأساسية في مسحوق الغسيل وسائل الجلي ومنظّفات الأرضيات. المواصفات والاستخدامات والتخزين الآمن.',
+                'LABSA 96% from Saudi Arabia: the main cleaning agent in washing powder, dishwashing liquid and floor cleaners. Specifications, uses and safe storage.')),
+    dict(src='hypo', out='sodium-hypochlorite.html', nav='products', parent='products',
+         crumb=L('هيبوكلوريت الصوديوم 12%', 'Sodium Hypochlorite 12%'),
+         title=L('هيبوكلوريت الصوديوم 12% (الكلور السائل) | زيفورا',
+                 'Sodium Hypochlorite 12% (Liquid Chlorine) | Zephora'),
+         desc=L('هيبوكلوريت الصوديوم 12% منشأ مصر لمعالجة المياه والتعقيم وصناعة الكلور المنزلي. المواصفات وطريقة التخفيف وتعليمات السلامة.',
+                'Sodium hypochlorite 12% from Egypt for water treatment, disinfection and household bleach production. Specifications, dilution and safety instructions.')),
+    dict(src='about', out='about.html', nav='about', schema='org', crumb=L('عن الشركة', 'About'),
+         title=L('عن الشركة | زيفورا لاستيراد المواد الخام والكيميائية',
+                 'About Us | Zephora Raw Materials & Chemicals Import'),
+         desc=L('زيفورا شركة ليبية في بنغازي تستورد المواد الخام لصناعة المنظّفات والتعقيم. تعرّف علينا وعلى منشأ موادنا وبيانات الشركة الرسمية.',
+                'Zephora is a Libyan company in Benghazi importing raw materials for detergents and disinfection. Learn about us, where our materials come from, and our official company details.')),
+    dict(src='contact', out='contact.html', nav='contact', schema='org', crumb=L('تواصل معنا', 'Contact'),
+         title=L('تواصل معنا واطلب عرض سعر | زيفورا', 'Contact Us & Request a Quote | Zephora'),
+         desc=L('اطلب سعر SLES أو LABSA أو هيبوكلوريت الصوديوم من زيفورا في بنغازي. اتصل على 0942228899 أو راسلنا على info@zephora.ly.',
+                'Request a price for SLES, LABSA or sodium hypochlorite from Zephora in Benghazi. Call 0942228899 or email info@zephora.ly.')),
+    dict(src='privacy', out='privacy.html', nav=None, crumb=L('الخصوصية', 'Privacy'),
+         title=L('سياسة الخصوصية | زيفورا', 'Privacy Policy | Zephora'),
+         desc=L('كيف نتعامل مع بياناتك عند تصفّح موقع زيفورا أو التواصل معنا.',
+                'How we handle your data when you browse the Zephora website or contact us.')),
+    dict(src='terms', out='terms.html', nav=None, crumb=L('شروط الاستخدام', 'Terms of use'),
+         title=L('شروط الاستخدام | زيفورا', 'Terms of Use | Zephora'),
+         desc=L('شروط استخدام موقع زيفورا لاستيراد المواد الخام والمواد الكيميائية.',
+                'Terms of use for the Zephora raw materials and chemicals website.')),
     dict(src='thanks', out='thanks.html', nav=None, noindex=True,
-         title='وصلتنا رسالتك | زيفورا', desc='شكرًا لتواصلك مع زيفورا.'),
-    dict(src='404', out='404.html', nav=None, noindex=True, absolute=True,
-         title='الصفحة غير موجودة | زيفورا', desc='الصفحة التي تبحث عنها غير موجودة.'),
+         title=L('وصلتنا رسالتك | زيفورا', 'We received your message | Zephora'),
+         desc=L('شكرًا لتواصلك مع زيفورا.', 'Thank you for contacting Zephora.')),
+    dict(src='404', out='404.html', nav=None, noindex=True, absolute=True, langs=['ar'],
+         title=L('الصفحة غير موجودة | زيفورا', 'Page not found | Zephora'),
+         desc=L('الصفحة التي تبحث عنها غير موجودة.', 'The page you are looking for does not exist.')),
 ]
+BY_SRC = {p['src']: p for p in PAGES}
 
 # ---------------------------------------------------------------- الأيقونات
 _I = {
@@ -120,7 +186,7 @@ def icon(name, cls=''):
 # ------------------------------------------------------- برميل التركيز (SVG)
 _barrel_n = [0]
 
-def barrel(key, decorative=True):
+def barrel(key, lang, decorative=True):
     """برميل على شكل برميل الشعار؛ ارتفاع السائل فيه = تركيز المادة."""
     p = PRODUCTS[key]
     _barrel_n[0] += 1
@@ -128,8 +194,8 @@ def barrel(key, decorative=True):
     top, bottom = 24.0, 158.0
     y = round(bottom - (bottom - top) * p['pct'] / 100, 1)
     body = 'M12 24V146C12 154 34 160 60 160S108 154 108 146V24'
-    aria = ('aria-hidden="true"' if decorative else
-            f'role="img" aria-label="برميل ممتلئ بنسبة {p["pct"]}% يمثّل تركيز المادة"')
+    label = UI[lang]['barrel'].format(pct=p['pct'])
+    aria = 'aria-hidden="true"' if decorative else f'role="img" aria-label="{label}"'
     return (
         f'<svg class="barrel barrel--{key}" viewBox="0 0 120 170" {aria}>'
         f'<defs><clipPath id="{cid}"><path d="{body}Z"/></clipPath></defs>'
@@ -144,30 +210,60 @@ def barrel(key, decorative=True):
         f'<ellipse class="barrel__bung" cx="80" cy="22" rx="7" ry="2.6"/>'
         f'</svg>')
 
-# ---------------------------------------------------------------- القالب
-NAV = [('products', 'products.html', 'المنتجات'),
-       ('about', 'about.html', 'عن الشركة'),
-       ('contact', 'contact.html', 'تواصل معنا')]
+# ----------------------------------------------------------- مسارات وروابط
+def page_url(page, lang):
+    tail = '' if page['out'] == 'index.html' else page['out']
+    return f"{SITE['url']}/{LANGS[lang]['prefix']}{tail}"
 
-def head(page, base):
-    url = SITE['url'] + '/' + ('' if page['out'] == 'index.html' else page['out'])
-    robots = '<meta name="robots" content="noindex">' if page.get('noindex') else \
-             f'<link rel="canonical" href="{url}">'
+def switch_href(page, lang):
+    """رابط النسخة المقابلة من الصفحة نفسها، نسبيًا من موقع الصفحة الحالية."""
+    other = 'en' if lang == 'ar' else 'ar'
+    tail = '' if page['out'] == 'index.html' else page['out']
+    if page.get('absolute'):
+        return '/en/'
+    return (('en/' if other == 'en' else '../') + tail)
+
+def crumb_chain(page):
+    chain = [page]
+    while chain[0].get('parent'):
+        chain.insert(0, BY_SRC[chain[0]['parent']])
+    return chain
+
+# ---------------------------------------------------------------- القالب
+def head(page, lang, root):
+    lg, s, ui = LANGS[lang], S(lang), UI[lang]
+    url = page_url(page, lang)
+    title, desc = page['title'][lang], page['desc'][lang]
+    if page.get('noindex'):
+        robots = '<meta name="robots" content="noindex">'
+        alt = ''
+    else:
+        robots = f'<link rel="canonical" href="{url}">'
+        alt = ''.join(f'\n<link rel="alternate" hreflang="{l}" href="{page_url(page, l)}">' for l in LANGS)
+        alt += f'\n<link rel="alternate" hreflang="x-default" href="{page_url(page, "ar")}">'
     ld = []
+    if page.get('website'):
+        ld.append({
+            '@context': 'https://schema.org', '@type': 'WebSite',
+            '@id': SITE['url'] + '/#website', 'url': SITE['url'] + '/',
+            'name': SITE_L['ar']['name'],
+            'alternateName': [SITE['name_en'], SITE_L['ar']['legal_name'], SITE['legal_name_en']],
+            'inLanguage': list(LANGS)})
     if page.get('schema') == 'org':
         org = {
             '@context': 'https://schema.org',
             '@type': 'LocalBusiness',
             '@id': SITE['url'] + '/#company',
-            'name': SITE['legal_name'],
-            'alternateName': [SITE['name'], SITE['name_en'], SITE['legal_name_en']],
-            'description': PAGES[0]['desc'],
-            'url': SITE['url'] + '/',
+            'name': s['legal_name'],
+            'alternateName': [SITE_L['ar']['name'], SITE['name_en'], SITE['legal_name_en'], SITE_L['ar']['legal_name']],
+            'description': PAGES[0]['desc'][lang],
+            'url': SITE['url'] + '/' + lg['prefix'],
             'logo': SITE['url'] + '/assets/img/brand/icon-512.png',
-            'image': SITE['url'] + '/assets/img/brand/social-card.jpg',
+            'image': SITE['url'] + '/assets/img/brand/' + lg['card'],
             'telephone': SITE['phone'],
             'email': SITE['email'],
-            'address': {'@type': 'PostalAddress', 'streetAddress': SITE['district'], 'addressLocality': 'بنغازي', 'addressCountry': 'LY'},
+            'address': {'@type': 'PostalAddress', 'streetAddress': s['district'],
+                        'addressLocality': s['locality'], 'addressCountry': 'LY'},
             'geo': {'@type': 'GeoCoordinates', 'latitude': SITE['lat'], 'longitude': SITE['lng']},
             'hasMap': SITE['map'],
             'areaServed': {'@type': 'Country', 'name': 'Libya'},
@@ -176,152 +272,173 @@ def head(page, base):
         if SITE['tax']:
             org['taxID'] = SITE['tax']
         ld.append(org)
-    if page.get('crumbs'):
-        items = [('الرئيسية', '')] + page['crumbs']
+    if page.get('crumb'):
+        chain = [(ui['home'], '')] + [(p['crumb'][lang], p['out']) for p in crumb_chain(page)]
         ld.append({
             '@context': 'https://schema.org', '@type': 'BreadcrumbList',
             'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n,
-                                 'item': SITE['url'] + '/' + h} for i, (n, h) in enumerate(items)]})
+                                 'item': f"{SITE['url']}/{lg['prefix']}{h}"} for i, (n, h) in enumerate(chain)]})
     ld_html = ''.join('\n<script type="application/ld+json">\n' +
                       json.dumps(x, ensure_ascii=False, indent=2) + '\n</script>' for x in ld)
-    og_url = url if not page.get('noindex') else SITE['url'] + '/'
+    og_url = url if not page.get('noindex') else f"{SITE['url']}/{lg['prefix']}"
+    gsc = f'\n<meta name="google-site-verification" content="{SITE["gsc"]}">' if SITE['gsc'] else ''
+    fonts = ''
+    if lang == 'ar':
+        fonts = (f'\n<link rel="preload" href="{root}assets/fonts/gess-two-medium.woff2" as="font" type="font/woff2" crossorigin>'
+                 f'\n<link rel="preload" href="{root}assets/fonts/gess-two-bold.woff2" as="font" type="font/woff2" crossorigin>')
+    card = f"{SITE['url']}/assets/img/brand/{lg['card']}"
+    site_name = f"{SITE_L['ar']['name']} — {SITE['name_en']}" if lang == 'ar' else SITE['name_en']
     return f'''<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{page['title']}</title>
-<meta name="description" content="{page['desc']}">
-{robots}
+<title>{title}</title>
+<meta name="description" content="{desc}">
+{robots}{alt}{gsc}
 <meta name="theme-color" content="#f5f4ef">
-<link rel="icon" href="{base}favicon.ico" sizes="48x48">
-<link rel="icon" type="image/png" sizes="32x32" href="{base}assets/img/brand/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="{base}assets/img/brand/icon-192.png">
-<link rel="apple-touch-icon" href="{base}apple-touch-icon.png">
-<link rel="manifest" href="{base}site.webmanifest">
-<link rel="preload" href="{base}assets/fonts/gess-two-medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{base}assets/fonts/gess-two-bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{base}assets/css/main.css">
+<link rel="icon" href="{root}favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="{root}assets/img/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="{root}assets/img/brand/icon-192.png">
+<link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
+<link rel="manifest" href="{root}site.webmanifest">{fonts}
+<link rel="stylesheet" href="{root}assets/css/main.css">
 <meta property="og:type" content="website">
-<meta property="og:locale" content="ar_LY">
-<meta property="og:site_name" content="{SITE['name']} — {SITE['name_en']}">
-<meta property="og:title" content="{page['title']}">
-<meta property="og:description" content="{page['desc']}">
+<meta property="og:locale" content="{lg['locale']}">
+<meta property="og:site_name" content="{site_name}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
 <meta property="og:url" content="{og_url}">
-<meta property="og:image" content="{SITE['url']}/assets/img/brand/social-card.jpg">
+<meta property="og:image" content="{card}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <script>document.documentElement.classList.add("js")</script>{ld_html}
 </head>'''
 
-def header(page, base):
-    def links(cls=''):
+def header(page, lang, root, base):
+    s, ui = S(lang), UI[lang]
+    def links():
         out = []
-        for key, href, label in NAV:
+        for key in ('products', 'about', 'contact'):
+            href = {'products': 'products.html', 'about': 'about.html', 'contact': 'contact.html'}[key]
             cur = ' aria-current="page"' if page['nav'] == key else ''
-            out.append(f'<a href="{base}{href}"{cur}>{label}</a>')
+            out.append(f'<a href="{base}{href}"{cur}>{ui["nav"][key]}</a>')
         return '\n        '.join(out)
     home_cur = ' aria-current="page"' if page['nav'] == 'home' else ''
-    return f'''<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+    other = 'en' if lang == 'ar' else 'ar'
+    sw = f'<a class="lang-switch" href="{switch_href(page, lang)}" hreflang="{other}" lang="{other}" aria-label="{ui["switch_aria"]}">{ui["switch_label"]}</a>'
+    return f'''<a class="skip" href="#main">{ui['skip']}</a>
 <header class="header" data-header>
   <div class="wrap header__bar">
-    <a class="brand" href="{base or './'}" aria-label="{SITE['name']} — الصفحة الرئيسية">
-      <picture><source srcset="{base}assets/img/brand/mark-160.webp" type="image/webp"><img src="{base}assets/img/brand/mark-160.png" width="160" height="148" alt=""></picture>
-      <span class="brand__text"><span class="brand__name">{SITE['name']}</span><span class="brand__tag">{SITE['tagline']}</span></span>
+    <a class="brand" href="{base or './'}" aria-label="{ui['brand_aria'].format(name=s['name'])}">
+      <picture><source srcset="{root}assets/img/brand/mark-160.webp" type="image/webp"><img src="{root}assets/img/brand/mark-160.png" width="160" height="148" alt=""></picture>
+      <span class="brand__text"><span class="brand__name">{s['name']}</span><span class="brand__tag">{s['tagline']}</span></span>
     </a>
-    <nav class="nav" aria-label="القائمة الرئيسية">
+    <nav class="nav" aria-label="{ui['nav_aria']}">
         {links()}
     </nav>
-    <a class="btn btn--sm header__cta" href="{base}contact.html">اطلب عرض سعر</a>
+    {sw}
+    <a class="btn btn--sm header__cta" href="{base}contact.html">{ui['quote']}</a>
     <details class="menu">
-      <summary aria-label="القائمة">{icon('menu', 'i-open')}{icon('close', 'i-close')}</summary>
-      <nav class="menu__panel" aria-label="قائمة الجوال">
-        <a href="{base or './'}"{home_cur}>الرئيسية</a>
+      <summary aria-label="{ui['menu']}">{icon('menu', 'i-open')}{icon('close', 'i-close')}</summary>
+      <nav class="menu__panel" aria-label="{ui['menu_aria']}">
+        <a href="{base or './'}"{home_cur}>{ui['home']}</a>
         {links()}
-        <a class="btn" href="tel:{SITE['phone']}">{icon('phone')}<span>اتصل: <span class="latin">{SITE['phone_display']}</span></span></a>
+        <a class="btn" href="tel:{SITE['phone']}">{icon('phone')}<span>{ui['call']} <span class="latin">{SITE['phone_display']}</span></span></a>
       </nav>
     </details>
   </div>
 </header>'''
 
-def footer(base):
-    legal = [SITE['legal_name']]
-    for key, label in (('cr', 'السجل التجاري'), ('tax', 'الرقم الضريبي'), ('chamber', SITE['chamber_name'])):
+def footer(page, lang, root, base):
+    s, ui = S(lang), UI[lang]
+    legal = [s['legal_name']]
+    for key, label in (('cr', ui['cr']), ('tax', ui['tax']), ('chamber', s['chamber_name'])):
         if SITE[key]:
             legal.append(f'{label}: <span class="latin">{SITE[key]}</span>')
     legal_html = ''.join(f'<span>{x}</span>' for x in legal)
-    prods = '\n          '.join(f'<li><a href="{base}{p["page"]}">{p["short"]}</a></li>' for p in PRODUCTS.values())
+    prods = '\n          '.join(f'<li><a href="{base}{p["page"]}">{p["short"][lang]}</a></li>' for p in PRODUCTS.values())
+    other = 'en' if lang == 'ar' else 'ar'
     return f'''<footer class="footer">
   <div class="wrap footer__top">
     <div>
       <div class="footer__brand">
-        <picture><source srcset="{base}assets/img/brand/mark-white-160.webp" type="image/webp"><img src="{base}assets/img/brand/mark-white-160.png" width="160" height="148" alt="" loading="lazy"></picture>
-        <div><b>{SITE['name']}</b><span>{SITE['tagline']}</span></div>
+        <picture><source srcset="{root}assets/img/brand/mark-white-160.webp" type="image/webp"><img src="{root}assets/img/brand/mark-white-160.png" width="160" height="148" alt="" loading="lazy"></picture>
+        <div><b>{s['name']}</b><span>{s['tagline']}</span></div>
       </div>
-      <p class="footer__about">نستورد المواد الخام لصناعة المنظّفات ومعالجة المياه، ونوفّرها للمصانع والموزّعين من بنغازي.</p>
+      <p class="footer__about">{ui['footer_about']}</p>
     </div>
     <div>
-      <h2>المنتجات</h2>
+      <h2>{ui['f_products']}</h2>
       <ul role="list">
           {prods}
       </ul>
     </div>
     <div>
-      <h2>الشركة</h2>
+      <h2>{ui['f_company']}</h2>
       <ul role="list">
-        <li><a href="{base}about.html">عن الشركة</a></li>
-        <li><a href="{base}products.html#faq">أسئلة شائعة</a></li>
-        <li><a href="{base}contact.html">اطلب عرض سعر</a></li>
+        <li><a href="{base}about.html">{ui['f_about']}</a></li>
+        <li><a href="{base}products.html#faq">{ui['f_faq']}</a></li>
+        <li><a href="{base}contact.html">{ui['quote']}</a></li>
       </ul>
     </div>
     <div>
-      <h2>تواصل</h2>
+      <h2>{ui['f_contact']}</h2>
       <ul role="list" class="footer__contact">
         <li>{icon('phone')}<a href="tel:{SITE['phone']}" class="latin">{SITE['phone_display']}</a></li>
         <li>{icon('mail')}<a href="mailto:{SITE['email']}" class="latin">{SITE['email']}</a></li>
-        <li>{icon('pin')}<a href="{SITE['map']}" target="_blank" rel="noopener">{SITE['city']}</a></li>
+        <li>{icon('pin')}<a href="{SITE['map']}" target="_blank" rel="noopener">{s['city']}</a></li>
       </ul>
     </div>
   </div>
   <div class="wrap footer__legal">{legal_html}</div>
   <div class="wrap footer__bottom">
-    <p>© <span data-year>2026</span> {SITE['name']} — جميع الحقوق محفوظة.</p>
-    <p class="footer__dev">تصميم وتطوير <a href="https://yosef.ly" target="_blank" rel="noopener">ديـوان التقنيـة الليبـي</a></p>
-    <nav aria-label="روابط ختامية"><a href="{base}privacy.html">الخصوصية</a><a href="{base}terms.html">الشروط</a></nav>
+    <p>© <span data-year>2026</span> {s['name']} — {ui['rights']}</p>
+    <p class="footer__dev">{ui['dev']} <a href="https://yosef.ly" target="_blank" rel="noopener">{ui['dev_name']}</a></p>
+    <nav aria-label="{ui['legal_nav']}"><a href="{switch_href(page, lang)}" hreflang="{other}" lang="{other}">{UI[lang]['switch_label']}</a><a href="{base}privacy.html">{ui['privacy']}</a><a href="{base}terms.html">{ui['terms']}</a></nav>
   </div>
 </footer>'''
 
-def crumbs_html(page, base):
-    if not page.get('crumbs'):
+def crumbs_html(page, lang, base):
+    if not page.get('crumb'):
         return ''
-    items = [('الرئيسية', base or './')] + [(n, base + h) for n, h in page['crumbs']]
+    ui = UI[lang]
+    items = [(ui['home'], base or './')] + [(p['crumb'][lang], base + p['out']) for p in crumb_chain(page)]
     lis = []
     for i, (n, h) in enumerate(items):
         if i == len(items) - 1:
             lis.append(f'<li aria-current="page">{n}</li>')
         else:
             lis.append(f'<li><a href="{h}">{n}</a></li>')
-    return '<nav aria-label="مسار التنقّل"><ol class="crumbs" role="list">' + ''.join(lis) + '</ol></nav>'
+    return f'<nav aria-label="{ui["crumbs_aria"]}"><ol class="crumbs" role="list">' + ''.join(lis) + '</ol></nav>'
 
 # ------------------------------------------------------------ معالجة المحتوى
-def render(text, page, base):
+def content_dir(lang):
+    return PAGES_DIR if lang == 'ar' else os.path.join(PAGES_DIR, 'en')
+
+def render(text, page, lang, root, base):
+    data = S(lang)
     def sub(m):
         kind, _, arg = m.group(1).partition(':')
         if kind == 'barrel':
             name, _, flag = arg.partition(':')
-            return barrel(name, decorative=(flag != 'label'))
+            return barrel(name, lang, decorative=(flag != 'label'))
         if kind == 'icon':
             return icon(arg)
         if kind == 'include':
-            with open(os.path.join(PAGES_DIR, '_partials', arg + '.html'), encoding='utf-8') as f:
-                return render(f.read(), page, base)
+            with open(os.path.join(content_dir(lang), '_partials', arg + '.html'), encoding='utf-8') as f:
+                return render(f.read(), page, lang, root, base)
         if kind == 'crumbs':
-            return crumbs_html(page, base)
+            return crumbs_html(page, lang, base)
         if kind == 'base':
             return base
+        if kind == 'root':
+            return root
         if kind == 'registry':
-            return registry_rows()
-        if kind in SITE:
-            return str(SITE[kind])
+            return registry_rows(lang)
+        if kind == 'prefix':
+            return LANGS[lang]['prefix']
+        if kind in data:
+            return str(data[kind])
         raise KeyError(f'وسم غير معروف: {m.group(0)}')
     return re.sub(r'\{\{([\w:-]+)\}\}', sub, text)
 
@@ -333,55 +450,71 @@ def isolate_numbers(html):
         parts[i] = pat.sub(r'<bdi dir="ltr">\1</bdi>', parts[i])
     return ''.join(parts)
 
-def registry_rows():
-    rows = [('الاسم القانوني', SITE['legal_name'], False)]
-    for key, label in (('cr', 'السجل التجاري'), ('tax', 'الرقم الضريبي'), ('chamber', f'رقم القيد — {SITE["chamber_name"]}')):
+def registry_rows(lang):
+    s, ui = S(lang), UI[lang]
+    rows = [(ui['reg_name'], s['legal_name'], False)]
+    for key, label in (('cr', ui['cr']), ('tax', ui['tax']), ('chamber', ui['reg_chamber'].format(chamber_name=s['chamber_name']))):
         rows.append((label, SITE[key], True))
-    rows.append(('المقر', SITE['city'], False))
+    rows.append((ui['reg_hq'], s['city'], False))
     out = []
     for label, val, mono in rows:
         if val:
             cls = ' class="mono"' if mono else ''
             out.append(f'<div><dt>{label}</dt><dd{cls}>{val}</dd></div>')
         else:
-            out.append(f'<div><dt>{label}</dt><dd class="pending">يُضاف قريبًا</dd></div>')
+            out.append(f'<div><dt>{label}</dt><dd class="pending">{ui["pending"]}</dd></div>')
     return '\n          '.join(out)
 
 def build():
+    os.makedirs(os.path.join(ROOT, 'en'), exist_ok=True)
     for page in PAGES:
-        base = '/' if page.get('absolute') else ''
-        _barrel_n[0] = 0
-        with open(os.path.join(PAGES_DIR, page['src'] + '.html'), encoding='utf-8') as f:
-            body = isolate_numbers(render(f.read(), page, base))
-        html = f'''<!doctype html>
-<html lang="ar" dir="rtl">
-{head(page, base)}
+        for lang in page.get('langs', list(LANGS)):
+            lg = LANGS[lang]
+            if page.get('absolute'):
+                root = base = '/'
+            else:
+                root, base = ('../' if lang == 'en' else ''), ''
+            _barrel_n[0] = 0
+            with open(os.path.join(content_dir(lang), page['src'] + '.html'), encoding='utf-8') as f:
+                body = render(f.read(), page, lang, root, base)
+            if lang == 'ar':
+                body = isolate_numbers(body)
+            html = f'''<!doctype html>
+<html lang="{lang}" dir="{lg['dir']}">
+{head(page, lang, root)}
 <body>
-{header(page, base)}
+{header(page, lang, root, base)}
 
 <main id="main">
 {body.strip()}
 </main>
 
-{footer(base)}
-<script src="{base}assets/js/main.js" defer></script>
+{footer(page, lang, root, base)}
+<script src="{root}assets/js/main.js" defer></script>
 </body>
 </html>
 '''
-        with open(os.path.join(ROOT, page['out']), 'w', encoding='utf-8') as f:
-            f.write(html)
-        print('✓', page['out'])
+            out = lg['prefix'] + page['out']
+            with open(os.path.join(ROOT, out), 'w', encoding='utf-8') as f:
+                f.write(html)
+            print('✓', out)
 
-    # خريطة الموقع
-    urls = [p for p in PAGES if not p.get('noindex')]
+    # خريطة الموقع، مع ربط كل صفحة بنسختها الأخرى
     pri = {'index.html': '1.0', 'products.html': '0.9', 'sles.html': '0.9', 'labsa.html': '0.9',
            'sodium-hypochlorite.html': '0.9', 'contact.html': '0.8', 'about.html': '0.7'}
-    entries = '\n'.join(
-        f'  <url>\n    <loc>{SITE["url"]}/{"" if p["out"] == "index.html" else p["out"]}</loc>\n'
-        f'    <priority>{pri.get(p["out"], "0.3")}</priority>\n  </url>' for p in urls)
+    entries = []
+    for page in PAGES:
+        if page.get('noindex'):
+            continue
+        alts = ''.join(f'\n    <xhtml:link rel="alternate" hreflang="{l}" href="{page_url(page, l)}"/>' for l in LANGS)
+        alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{page_url(page, "ar")}"/>'
+        for lang in LANGS:
+            entries.append(f'  <url>\n    <loc>{page_url(page, lang)}</loc>{alts}\n'
+                           f'    <priority>{pri.get(page["out"], "0.3")}</priority>\n  </url>')
     with open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf-8') as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
-                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + entries + '\n</urlset>\n')
+                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+                + '\n'.join(entries) + '\n</urlset>\n')
     print('✓ sitemap.xml')
 
 if __name__ == '__main__':

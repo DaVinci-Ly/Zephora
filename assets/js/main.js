@@ -65,7 +65,7 @@
   }
 
   /* ------------------------- اختيار المادة مسبقًا في النموذج (?product=sles) */
-  var select = doc.querySelector("select[name='المادة']");
+  var select = doc.querySelector("select[data-product-select]");
   if (select && "URLSearchParams" in window) {
     var wanted = new URLSearchParams(window.location.search).get("product");
     if (wanted) {
