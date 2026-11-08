@@ -74,9 +74,9 @@ UI = {
         skip='تخطَّ إلى المحتوى', home='الرئيسية', nav_aria='القائمة الرئيسية', menu='القائمة',
         menu_aria='قائمة الجوال', quote='اطلب عرض سعر', call='اتصل:',
         nav={'products': 'المنتجات', 'about': 'عن الشركة', 'contact': 'تواصل معنا'},
-        footer_about='نستورد المواد الخام لصناعة المنظّفات ومعالجة المياه، ونوفّرها للمصانع والموزّعين من بنغازي.',
+        footer_about='نستورد المواد الخام لصناعة المنظّفات ومعالجة المياه، ونوفّرها للمصانع والموزّعين من بنغازي',
         f_products='المنتجات', f_company='الشركة', f_about='عن الشركة', f_faq='أسئلة شائعة', f_contact='تواصل',
-        rights='جميع الحقوق محفوظة.', dev='تصميم وتطوير', dev_name='ديوان البيانات الليبي',
+        rights='جميع الحقوق محفوظة', dev='تصميم وتطوير', dev_name='ديوان البيانات الليبي',
         privacy='الخصوصية', terms='الشروط', legal_nav='روابط ختامية', crumbs_aria='مسار التنقّل',
         cr='السجل التجاري', tax='الرقم الضريبي', reg_chamber='رقم القيد — {chamber_name}',
         reg_name='الاسم القانوني', reg_hq='المقر', pending='يُضاف قريبًا',
@@ -107,52 +107,52 @@ PAGES = [
     dict(src='home', out='index.html', nav='home', schema='org', website=True,
          title=L('زيفورا لاستيراد المواد الخام | SLES وLABSA وهيبوكلوريت الصوديوم في ليبيا',
                  'Zephora | SLES, LABSA & Sodium Hypochlorite Supplier in Libya'),
-         desc=L('شركة زيفورا في بنغازي تستورد المواد الخام لصناعة المنظّفات ومعالجة المياه: SLES 70% من الصين، وLABSA 96% من السعودية، وهيبوكلوريت الصوديوم 12% من مصر.',
+         desc=L('زيفورا تستورد مواد خام لصناعة المنظّفات ومعالجة المياه في بنغازي: SLES 70% من الصين، وLABSA 96% من السعودية، وهيبوكلوريت الصوديوم 12% من مصر',
                 'Zephora imports raw materials for detergents and water treatment in Benghazi, Libya: SLES 70% from China, LABSA 96% from Saudi Arabia, and sodium hypochlorite 12% from Egypt.')),
     dict(src='products', out='products.html', nav='products', crumb=L('المنتجات', 'Products'),
          title=L('المنتجات: SLES وLABSA وهيبوكلوريت الصوديوم | زيفورا',
                  'Products: SLES, LABSA & Sodium Hypochlorite | Zephora'),
-         desc=L('تعرّف على المواد الثلاث التي تستوردها زيفورا: ما هي، وأين تُستخدم، ومنشأ كل منها وتركيزها، مع إجابات لأكثر الأسئلة شيوعًا.',
+         desc=L('معلومات عن المواد التي تستوردها زيفورا واستخداماتها وبلد منشأ كل منها وتركيزها',
                 'The three materials Zephora imports: what each one is, where it is used, its origin and concentration, with answers to common questions.')),
     dict(src='sles', out='sles.html', nav='products', parent='products', crumb=L('SLES 70%', 'SLES 70%'),
          title=L('SLES 70% (تكسابون) — سلفات لوريل إيثر الصوديوم | زيفورا',
                  'SLES 70% (Texapon) — Sodium Lauryl Ether Sulfate | Zephora'),
-         desc=L('SLES 70% منشأ الصين: المادة الأساسية للرغوة في الشامبو والصابون السائل وسائل الجلي. المواصفات وطرق الاستخدام والتخزين، واطلب السعر من زيفورا في بنغازي.',
+         desc=L('SLES 70% من الصين، مادة تدخل في صناعة الشامبو والصابون السائل وسائل الجلي. تعرّف على مواصفاتها واستخداماتها واطلب السعر من زيفورا في بنغازي',
                 'SLES 70% from China: the foaming base of shampoo, liquid soap and dishwashing liquid. Specifications, uses and storage. Request a price from Zephora in Benghazi.')),
     dict(src='labsa', out='labsa.html', nav='products', parent='products', crumb=L('LABSA 96%', 'LABSA 96%'),
          title=L('LABSA 96% (حمض السلفونيك) — منشأ السعودية | زيفورا',
                  'LABSA 96% (Sulfonic Acid) — Origin Saudi Arabia | Zephora'),
-         desc=L('LABSA 96% منشأ السعودية: المادة المنظّفة الأساسية في مسحوق الغسيل وسائل الجلي ومنظّفات الأرضيات. المواصفات والاستخدامات والتخزين الآمن.',
+         desc=L('LABSA 96% من السعودية، مادة تدخل في صناعة مسحوق الغسيل وسائل الجلي ومنظّفات الأرضيات. معلومات عن المواصفات والاستخدامات والتخزين',
                 'LABSA 96% from Saudi Arabia: the main cleaning agent in washing powder, dishwashing liquid and floor cleaners. Specifications, uses and safe storage.')),
     dict(src='hypo', out='sodium-hypochlorite.html', nav='products', parent='products',
          crumb=L('هيبوكلوريت الصوديوم 12%', 'Sodium Hypochlorite 12%'),
          title=L('هيبوكلوريت الصوديوم 12% (الكلور السائل) | زيفورا',
                  'Sodium Hypochlorite 12% (Liquid Chlorine) | Zephora'),
-         desc=L('هيبوكلوريت الصوديوم 12% منشأ مصر لمعالجة المياه والتعقيم وصناعة الكلور المنزلي. المواصفات وطريقة التخفيف وتعليمات السلامة.',
+         desc=L('هيبوكلوريت الصوديوم 12% من مصر لمعالجة المياه والتعقيم وصناعة الكلور المنزلي. معلومات عن المواصفات والتخفيف والسلامة',
                 'Sodium hypochlorite 12% from Egypt for water treatment, disinfection and household bleach production. Specifications, dilution and safety instructions.')),
     dict(src='about', out='about.html', nav='about', schema='org', crumb=L('عن الشركة', 'About'),
          title=L('عن الشركة | زيفورا لاستيراد المواد الخام والكيميائية',
                  'About Us | Zephora Raw Materials & Chemicals Import'),
-         desc=L('زيفورا شركة ليبية في بنغازي تستورد المواد الخام لصناعة المنظّفات والتعقيم. تعرّف علينا وعلى منشأ موادنا وبيانات الشركة الرسمية.',
+         desc=L('زيفورا شركة ليبية في بنغازي تستورد المواد الخام لصناعة المنظّفات ومعالجة المياه. معلومات عن الشركة والمواد التي تستوردها',
                 'Zephora is a Libyan company in Benghazi importing raw materials for detergents and disinfection. Learn about us, where our materials come from, and our official company details.')),
     dict(src='contact', out='contact.html', nav='contact', schema='org', crumb=L('تواصل معنا', 'Contact'),
          title=L('تواصل معنا واطلب عرض سعر | زيفورا', 'Contact Us & Request a Quote | Zephora'),
-         desc=L('اطلب سعر SLES أو LABSA أو هيبوكلوريت الصوديوم من زيفورا في بنغازي. اتصل على 0942228899 أو راسلنا على info@zephora.ly.',
+         desc=L('لطلب سعر SLES أو LABSA أو هيبوكلوريت الصوديوم من زيفورا في بنغازي، اتصل على 0942228899 أو راسل info@zephora.ly',
                 'Request a price for SLES, LABSA or sodium hypochlorite from Zephora in Benghazi. Call 0942228899 or email info@zephora.ly.')),
     dict(src='privacy', out='privacy.html', nav=None, crumb=L('الخصوصية', 'Privacy'),
          title=L('سياسة الخصوصية | زيفورا', 'Privacy Policy | Zephora'),
-         desc=L('كيف نتعامل مع بياناتك عند تصفّح موقع زيفورا أو التواصل معنا.',
+         desc=L('كيفية التعامل مع بياناتك عند تصفّح موقع زيفورا أو التواصل معنا',
                 'How we handle your data when you browse the Zephora website or contact us.')),
     dict(src='terms', out='terms.html', nav=None, crumb=L('شروط الاستخدام', 'Terms of use'),
          title=L('شروط الاستخدام | زيفورا', 'Terms of Use | Zephora'),
-         desc=L('شروط استخدام موقع زيفورا لاستيراد المواد الخام والمواد الكيميائية.',
+         desc=L('شروط استخدام موقع زيفورا لاستيراد المواد الخام والمواد الكيميائية',
                 'Terms of use for the Zephora raw materials and chemicals website.')),
     dict(src='thanks', out='thanks.html', nav=None, noindex=True,
          title=L('وصلتنا رسالتك | زيفورا', 'We received your message | Zephora'),
-         desc=L('شكرًا لتواصلك مع زيفورا.', 'Thank you for contacting Zephora.')),
+         desc=L('شكرًا لتواصلك مع زيفورا', 'Thank you for contacting Zephora.')),
     dict(src='404', out='404.html', nav=None, noindex=True, absolute=True, langs=['ar'],
          title=L('الصفحة غير موجودة | زيفورا', 'Page not found | Zephora'),
-         desc=L('الصفحة التي تبحث عنها غير موجودة.', 'The page you are looking for does not exist.')),
+         desc=L('الصفحة التي تبحث عنها غير موجودة', 'The page you are looking for does not exist.')),
 ]
 BY_SRC = {p['src']: p for p in PAGES}
 
@@ -187,7 +187,7 @@ def icon(name, cls=''):
 _barrel_n = [0]
 
 def barrel(key, lang, decorative=True):
-    """برميل على شكل برميل الشعار؛ ارتفاع السائل فيه = تركيز المادة."""
+    """برميل على شكل برميل الشعار؛ ارتفاع السائل فيه = تركيز المادة"""
     p = PRODUCTS[key]
     _barrel_n[0] += 1
     cid = f'clip-{key}-{_barrel_n[0]}'
@@ -216,7 +216,7 @@ def page_url(page, lang):
     return f"{SITE['url']}/{LANGS[lang]['prefix']}{tail}"
 
 def switch_href(page, lang):
-    """رابط النسخة المقابلة من الصفحة نفسها، نسبيًا من موقع الصفحة الحالية."""
+    """رابط النسخة المقابلة من الصفحة نفسها، نسبيًا من موقع الصفحة الحالية"""
     other = 'en' if lang == 'ar' else 'ar'
     tail = '' if page['out'] == 'index.html' else page['out']
     if page.get('absolute'):
@@ -284,8 +284,8 @@ def head(page, lang, root):
     gsc = f'\n<meta name="google-site-verification" content="{SITE["gsc"]}">' if SITE['gsc'] else ''
     fonts = ''
     if lang == 'ar':
-        fonts = (f'\n<link rel="preload" href="{root}assets/fonts/gess-two-medium.woff2" as="font" type="font/woff2" crossorigin>'
-                 f'\n<link rel="preload" href="{root}assets/fonts/gess-two-bold.woff2" as="font" type="font/woff2" crossorigin>')
+        fonts = (f'\n<link rel="preload" href="{root}assets/fonts/cairo-arabic.woff2" as="font" type="font/woff2" crossorigin>'
+                 f'\n<link rel="preload" href="{root}assets/fonts/cairo-latin.woff2" as="font" type="font/woff2" crossorigin>')
     card = f"{SITE['url']}/assets/img/brand/{lg['card']}"
     site_name = f"{SITE_L['ar']['name']} — {SITE['name_en']}" if lang == 'ar' else SITE['name_en']
     return f'''<head>
@@ -443,7 +443,7 @@ def render(text, page, lang, root, base):
     return re.sub(r'\{\{([\w:-]+)\}\}', sub, text)
 
 def isolate_numbers(html):
-    """يعزل النسب المئوية داخل النص العربي حتى لا تنقلب إلى %12 بفعل اتجاه السطر."""
+    """يعزل النسب المئوية داخل النص العربي حتى لا تنقلب إلى %12 بفعل اتجاه السطر"""
     parts = re.split(r'(<[^>]+>)', html)
     pat = re.compile(r'(?<![\w.])(\d+(?:\.\d+)?%)')
     for i in range(0, len(parts), 2):          # الأجزاء الزوجية نص، الفردية وسوم
