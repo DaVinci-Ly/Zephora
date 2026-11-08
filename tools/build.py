@@ -76,7 +76,7 @@ UI = {
         nav={'products': 'المنتجات', 'about': 'عن الشركة', 'contact': 'تواصل معنا'},
         footer_about='نستورد المواد الخام لصناعة المنظّفات ومعالجة المياه، ونوفّرها للمصانع والموزّعين من بنغازي.',
         f_products='المنتجات', f_company='الشركة', f_about='عن الشركة', f_faq='أسئلة شائعة', f_contact='تواصل',
-        rights='جميع الحقوق محفوظة.', dev='تصميم وتطوير', dev_name='ديـوان التقنيـة الليبـي',
+        rights='جميع الحقوق محفوظة.', dev='تصميم وتطوير', dev_name='ديوان البيانات الليبي',
         privacy='الخصوصية', terms='الشروط', legal_nav='روابط ختامية', crumbs_aria='مسار التنقّل',
         cr='السجل التجاري', tax='الرقم الضريبي', reg_chamber='رقم القيد — {chamber_name}',
         reg_name='الاسم القانوني', reg_hq='المقر', pending='يُضاف قريبًا',
@@ -89,7 +89,7 @@ UI = {
         nav={'products': 'Products', 'about': 'About', 'contact': 'Contact'},
         footer_about='We import raw materials for detergent manufacturing and water treatment, and supply factories and distributors from Benghazi.',
         f_products='Products', f_company='Company', f_about='About us', f_faq='FAQ', f_contact='Contact',
-        rights='All rights reserved.', dev='Design and development by', dev_name='Libyan Tech Diwan',
+        rights='All rights reserved.', dev='Design and development by', dev_name='Libyan Data Diwan',
         privacy='Privacy', terms='Terms', legal_nav='Legal links', crumbs_aria='Breadcrumb',
         cr='Commercial registry', tax='Tax number', reg_chamber='Chamber membership — {chamber_name}',
         reg_name='Legal name', reg_hq='Location', pending='Coming soon',
@@ -393,7 +393,7 @@ def footer(page, lang, root, base):
   <div class="wrap footer__legal">{legal_html}</div>
   <div class="wrap footer__bottom">
     <p>© <span data-year>2026</span> {s['name']} — {ui['rights']}</p>
-    <p class="footer__dev">{ui['dev']} <a href="https://yosef.ly" target="_blank" rel="noopener">{ui['dev_name']}</a></p>
+    <p class="footer__dev">{ui['dev']} <a href="https://ldd.ly" target="_blank" rel="noopener">{ui['dev_name']}</a></p>
     <nav aria-label="{ui['legal_nav']}"><a href="{switch_href(page, lang)}" hreflang="{other}" lang="{other}">{UI[lang]['switch_label']}</a><a href="{base}privacy.html">{ui['privacy']}</a><a href="{base}terms.html">{ui['terms']}</a></nav>
   </div>
 </footer>'''
