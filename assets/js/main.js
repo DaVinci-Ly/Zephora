@@ -9,6 +9,18 @@
   var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  each(doc.querySelectorAll(".lang-switch"), function (link) {
+    link.addEventListener("click", function () {
+      var language = link.getAttribute("hreflang");
+      if (language !== "ar" && language !== "en") return;
+      try {
+        window.localStorage.setItem("zephora-language", language);
+      } catch (error) {
+        console.warn("Could not save the language preference", error);
+      }
+    });
+  });
+
   /* ------------------------------------------------ حالة الترويسة عند التمرير */
   var header = doc.querySelector("[data-header]");
   if (header) {

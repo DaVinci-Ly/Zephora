@@ -74,7 +74,7 @@ UI = {
         skip='تخطَّ إلى المحتوى', home='الرئيسية', nav_aria='القائمة الرئيسية', menu='القائمة',
         menu_aria='قائمة الجوال', quote='اطلب عرض سعر', call='اتصل:',
         nav={'products': 'المنتجات', 'about': 'عن الشركة', 'contact': 'تواصل معنا'},
-        footer_about='نستورد المواد الخام لصناعة المنظّفات ومعالجة المياه، ونوفّرها للمصانع والموزّعين من بنغازي',
+        footer_about='نستورد المواد الخام لصناعة المنظّفات، ونوفّرها للمصانع والموزّعين من بنغازي',
         f_products='المنتجات', f_company='الشركة', f_about='عن الشركة', f_faq='أسئلة شائعة', f_contact='تواصل',
         rights='جميع الحقوق محفوظة', dev='تصميم وتطوير', dev_name='ديوان البيانات الليبي',
         privacy='الخصوصية', terms='الشروط', legal_nav='روابط ختامية', crumbs_aria='مسار التنقّل',
@@ -87,7 +87,7 @@ UI = {
         skip='Skip to content', home='Home', nav_aria='Main menu', menu='Menu',
         menu_aria='Mobile menu', quote='Request a quote', call='Call:',
         nav={'products': 'Products', 'about': 'About', 'contact': 'Contact'},
-        footer_about='We import raw materials for detergent manufacturing and water treatment, and supply factories and distributors from Benghazi.',
+        footer_about='We import raw materials for detergent manufacturing and supply factories and distributors from Benghazi.',
         f_products='Products', f_company='Company', f_about='About us', f_faq='FAQ', f_contact='Contact',
         rights='All rights reserved.', dev='Design and development by', dev_name='Libyan Data Diwan',
         privacy='Privacy', terms='Terms', legal_nav='Legal links', crumbs_aria='Breadcrumb',
@@ -107,8 +107,8 @@ PAGES = [
     dict(src='home', out='index.html', nav='home', schema='org', website=True,
          title=L('زيفورا لاستيراد المواد الخام | SLES وLABSA وهيبوكلوريت الصوديوم في ليبيا',
                  'Zephora | SLES, LABSA & Sodium Hypochlorite Supplier in Libya'),
-         desc=L('زيفورا تستورد مواد خام لصناعة المنظّفات ومعالجة المياه في بنغازي: SLES 70% من الصين، وLABSA 96% من السعودية، وهيبوكلوريت الصوديوم 12% من مصر',
-                'Zephora imports raw materials for detergents and water treatment in Benghazi, Libya: SLES 70% from China, LABSA 96% from Saudi Arabia, and sodium hypochlorite 12% from Egypt.')),
+         desc=L('زيفورا تستورد مواد خام لصناعة المنظّفات في بنغازي: SLES 70% من الصين، وLABSA 96% من السعودية، وهيبوكلوريت الصوديوم 12% من مصر',
+                'Zephora imports raw materials for detergents in Benghazi, Libya: SLES 70% from China, LABSA 96% from Saudi Arabia, and sodium hypochlorite 12% from Egypt.')),
     dict(src='products', out='products.html', nav='products', crumb=L('المنتجات', 'Products'),
          title=L('المنتجات: SLES وLABSA وهيبوكلوريت الصوديوم | زيفورا',
                  'Products: SLES, LABSA & Sodium Hypochlorite | Zephora'),
@@ -133,8 +133,8 @@ PAGES = [
     dict(src='about', out='about.html', nav='about', schema='org', crumb=L('عن الشركة', 'About'),
          title=L('عن الشركة | زيفورا لاستيراد المواد الخام والكيميائية',
                  'About Us | Zephora Raw Materials & Chemicals Import'),
-         desc=L('زيفورا شركة ليبية في بنغازي تستورد المواد الخام لصناعة المنظّفات ومعالجة المياه. معلومات عن الشركة والمواد التي تستوردها',
-                'Zephora is a Libyan company in Benghazi importing raw materials for detergents and disinfection. Learn about us, where our materials come from, and our official company details.')),
+         desc=L('زيفورا شركة ليبية في بنغازي تستورد المواد الخام لصناعة المنظّفات. معلومات عن الشركة والمواد التي تستوردها',
+                'Zephora is a Libyan company in Benghazi importing raw materials for detergents. Learn about us, where our materials come from, and our official company details.')),
     dict(src='contact', out='contact.html', nav='contact', schema='org', crumb=L('تواصل معنا', 'Contact'),
          title=L('تواصل معنا واطلب عرض سعر | زيفورا', 'Contact Us & Request a Quote | Zephora'),
          desc=L('لطلب سعر SLES أو LABSA أو هيبوكلوريت الصوديوم من زيفورا في بنغازي، اتصل على 0942228899 أو راسل info@zephora.ly',
@@ -221,6 +221,8 @@ def switch_href(page, lang):
     tail = '' if page['out'] == 'index.html' else page['out']
     if page.get('absolute'):
         return '/en/'
+    if lang == 'en' and page['src'] == 'home':
+        return '../?lang=ar'
     return (('en/' if other == 'en' else '../') + tail)
 
 def crumb_chain(page):
@@ -240,7 +242,7 @@ def head(page, lang, root):
     else:
         robots = f'<link rel="canonical" href="{url}">'
         alt = ''.join(f'\n<link rel="alternate" hreflang="{l}" href="{page_url(page, l)}">' for l in LANGS)
-        alt += f'\n<link rel="alternate" hreflang="x-default" href="{page_url(page, "ar")}">'
+        alt += f'\n<link rel="alternate" hreflang="x-default" href="{page_url(page, "en")}">'
     ld = []
     if page.get('website'):
         ld.append({
@@ -286,6 +288,22 @@ def head(page, lang, root):
     if lang == 'ar':
         fonts = (f'\n<link rel="preload" href="{root}assets/fonts/cairo-arabic.woff2" as="font" type="font/woff2" crossorigin>'
                  f'\n<link rel="preload" href="{root}assets/fonts/cairo-latin.woff2" as="font" type="font/woff2" crossorigin>')
+    language_script = ''
+    if lang == 'ar' and page['src'] == 'home':
+        language_script = '''\n<script>
+(function () {
+  var language = 'en';
+  try {
+    if (localStorage.getItem('zephora-language') === 'ar') language = 'ar';
+  } catch (error) {
+    console.warn('Could not read the saved language preference', error);
+  }
+  if (/[?&]lang=ar(?:&|$)/.test(location.search)) language = 'ar';
+  if (language === 'en' && /^\\/(?:index\\.html)?$/.test(location.pathname)) {
+    location.replace('/en/' + location.search + location.hash);
+  }
+})();
+</script>'''
     card = f"{SITE['url']}/assets/img/brand/{lg['card']}"
     site_name = f"{SITE_L['ar']['name']} — {SITE['name_en']}" if lang == 'ar' else SITE['name_en']
     return f'''<head>
@@ -300,7 +318,7 @@ def head(page, lang, root):
 <link rel="icon" type="image/png" sizes="192x192" href="{root}assets/img/brand/icon-192.png">
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="manifest" href="{root}site.webmanifest">{fonts}
-<link rel="stylesheet" href="{root}assets/css/main.css">
+<link rel="stylesheet" href="{root}assets/css/main.css">{language_script}
 <meta property="og:type" content="website">
 <meta property="og:locale" content="{lg['locale']}">
 <meta property="og:site_name" content="{site_name}">
@@ -507,7 +525,7 @@ def build():
         if page.get('noindex'):
             continue
         alts = ''.join(f'\n    <xhtml:link rel="alternate" hreflang="{l}" href="{page_url(page, l)}"/>' for l in LANGS)
-        alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{page_url(page, "ar")}"/>'
+        alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{page_url(page, "en")}"/>'
         for lang in LANGS:
             entries.append(f'  <url>\n    <loc>{page_url(page, lang)}</loc>{alts}\n'
                            f'    <priority>{pri.get(page["out"], "0.3")}</priority>\n  </url>')
